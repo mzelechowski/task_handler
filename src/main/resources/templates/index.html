@@ -30,6 +30,7 @@
 <!--        <td th:text="${task.getEndDate()}" class="end-date"></td>-->
         <td th:text="${#temporals.format(task.getEndDate(), 'yyyy-MM-dd HH:mm')}" class="end-date"></td>
         <td class="time-left"></td>
+
         <td th:text="${task.getBreaklength()}"></td>
         <td th:text="${task.completed}"></td>
         <td th:text="${task.again}"></td>
