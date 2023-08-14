@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="header :: head"></head>
+<body>
+<h2 th:text="${title}"></h2>
+<table class="table table-bordered table-striped table-responsive-sm w-100">
+    <thead>
+    <th>Id</th>
+    <th>Name</th>
+    <th>Start Date</th>
+    <th>End Date</th>
+    <th>Time Left</th>
+    <th>Interval Length</th>
+    <th>Completed</th>
+    <th>Repeat</th>
+    <th>View</th>
+    <th>Delete</th>
+    <th>Modify</th>
+    <th>Stop</th>
+    <th>Start</th>
+
+
+    </thead>
+    <tbody>
+    <tr th:each="task : ${tasks}">
+        <td th:text="${task.getId()}"></td>
+        <td th:text="${task.getName()}" class="name"></td>
+        <td th:text="${task.getStartDate()}"></td>
+        <td th:text="${task.getEndDate()}" class="end-date"></td>
+        <td class="time-left"></td>
+        <td th:text="${task.getBreaklength()}"></td>
+        <td th:text="${task.completed}"></td>
+        <td th:text="${task.again}"></td>
+        <td>
+            <a th:href="|/task/${task.id}|">view</a>
+        </td>
+        <td>
+            <form action="/delete" method="post">
+                <input hidden name="id" th:value="${task.getId()}">
+                <button type="submit" class="tbn btn-danger btn-sm pt-0 pb-0">delete</button>
+            </form>
+        </td>
+        <td>
+            <form action="/modify" method="post">
+                <input hidden name="id" th:value="${task.getId()}">
+                <button type="submit" class="tbn btn-info btn-sm pt-0 pb-0">modify</button>
+            </form>
+        </td>
+        <td>
+            <form action="/stop" method="post">
+                <input hidden name="id" th:value="${task.getId()}">
+                <button type="submit" class="tbn btn-info btn-sm pt-0 pb-0">stop</button>
+            </form>
+        </td>
+        <td>
+            <form action="/start" method="post">
+                <input hidden name="id" th:value="${task.getId()}">
+                <button type="submit" class="tbn btn-success btn-sm pt-0 pb-0">start/restart</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<br /><br />
+<h2>Add New Task</h2>
+    <form action="/add-task" method="post" autocomplete="off" onsubmit="abc()">
+        <table>
+            <thead>
+            <tr>
+                <th><label for="name">Task name ?</label></th>
+                <th><label for="breaklength">Interval Length ?</label></th>
+                <th><label for="again">Repeat ?</label></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><input type="text" id="name" name="name" placeholder="podaj nazwę zadania"></td>
+                <td><input type="text" id="breaklength" name="breaklength" placeholder="podaj co ile wykonać"></td>
+                <td>
+                    <label for="again">
+                        <input type="checkbox" id="again" name="again"> Wykonaj ponownie
+                    </label>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <input type="submit" value="submit">
+    </form>
+
+<script>
+    const a = new Audio("http://www.instalacje-sanitarne.waw.pl/sound/ding.mp3");
+    function updateTable() {
+        const rows = document.querySelectorAll('tbody tr');
+        rows.forEach(row => {
+            const endDateCell = row.querySelector('.end-date');
+            const timeLeftCell = row.querySelector('.time-left');
+            const nameCell= row.querySelector('.name');
+
+            const endDate = endDateCell.textContent;
+
+            if (!endDate) {
+                timeLeftCell.textContent = '--';
+            } else {
+                // Calculate time left based on endDate and update timeLeftCell
+                const now = new Date().getTime();
+                const endTime = new Date(endDate).getTime();
+                // const timeLeft = Math.max(0, endTime - now);
+                const timeLeft = endTime - now;
+                const secondsLeft = Math.floor(timeLeft / 1000);
+                timeLeftCell.textContent = secondsLeft;
+
+                if (secondsLeft <=0 ) {
+
+                    a.play();
+
+                    window.moveTo(0, 0);
+                    window.resizeTo(screen.width, screen.height);
+                    //alert("Sprawdź task: " + nameCell.textContent);
+                    var messageBox = document.createElement("div");
+                    messageBox.style.position = "fixed";
+                    messageBox.style.top = "50%";
+                    messageBox.style.left = "50%";
+                    messageBox.style.transform = "translate(-50%, -50%)";
+                    messageBox.style.background = "red";
+                    messageBox.style.padding = "20px";
+                    messageBox.style.boxShadow = "0 0 10px rgba(0, 0, 0, 0.2)";
+                    messageBox.style.zIndex = "9999";
+                    messageBox.style.fontWeight = "bold";
+                    messageBox.textContent = "Sprawdź task: " + nameCell.textContent;
+
+                    var closeButton = document.createElement("button");
+                    closeButton.textContent = "Close";
+                    closeButton.style.display = "block";
+                    closeButton.style.margin = "0 auto";
+                    closeButton.addEventListener("click", function() {
+                        document.body.removeChild(messageBox);
+                    });
+                    messageBox.appendChild(document.createElement("br")); // Dodaj odstęp
+                    messageBox.appendChild(document.createElement("br")); // Dodaj odstęp
+                    messageBox.appendChild(closeButton);
+                    document.body.appendChild(messageBox);
+
+                }
+            }
+        });
+    }
+
+    // Call updateTable every second
+    setInterval(updateTable, 1000);
+</script>
+
+</body>
+</html>
