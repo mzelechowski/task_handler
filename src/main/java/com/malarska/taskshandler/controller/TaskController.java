@@ -59,7 +59,8 @@ public class TaskController {
         if (optionalTask.isPresent()) {
             Task task = optionalTask.get();
 //            if (task.getStartDate() == null) {
-                LocalDateTime initialDateTime = LocalDateTime.now();
+                LocalDateTime initialDateTime = LocalDateTime.now().withSecond(0);
+            System.out.println(initialDateTime);
                 task.setStartDate(initialDateTime);
                 task.setEndDate(initialDateTime.plusSeconds((long) (task.getBreaklength()*60)));
                 tasksRepository.save(task);
@@ -107,7 +108,7 @@ public class TaskController {
         return "redirect:/";
     }
 
-    @RequestMapping("/task")
+    @GetMapping("/task")
     public String getTask(@RequestParam("id") Integer id, Model model){
         Task task = tasksRepository.findById(id).orElse(null);
 

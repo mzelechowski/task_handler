@@ -27,10 +27,6 @@
         <td th:text="${#temporals.format(task.getEndDate(), 'yyyy-MM-dd HH:mm')}" class="end-date"></td>
     </tr>
     <tr>
-        <td>Time Left</td>
-        <td class="time-left"></td>
-    </tr>
-    <tr>
         <td>Interval Length</td>
         <td th:text="${task.getBreaklength()}"></td>
     </tr>
