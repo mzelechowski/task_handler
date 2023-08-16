@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Title</title>-->
+<!--</head>-->
+<head th:replace="header :: head">
+</head>
+<body>
+<h2>Show all data:</h2>
+<table class="table table-bordered table-striped table-responsive-sm w-100">
+    <tbody>
+    <tr>
+        <td>Id</td>
+        <td th:text="${task.getId()}"></td>
+    </tr>
+    <tr>
+        <td>Name</td>
+        <td th:text="${task.getName()}" class="name"></td>
+    </tr>
+    <tr>
+        <td>Start Date</td>
+        <td th:text="${#temporals.format(task.getStartDate(), 'yyyy-MM-dd HH:mm')}"></td>
+    </tr>
+    <tr>
+        <td>End Date</td>
+        <td th:text="${#temporals.format(task.getEndDate(), 'yyyy-MM-dd HH:mm')}" class="end-date"></td>
+    </tr>
+    <tr>
+        <td>Time Left</td>
+        <td class="time-left"></td>
+    </tr>
+    <tr>
+        <td>Interval Length</td>
+        <td th:text="${task.getBreaklength()}"></td>
+    </tr>
+    <tr>
+        <td>Completed</td>
+        <td th:text="${task.completed}"></td>
+    </tr>
+    <tr>
+        <td>Repeat</td>
+        <td th:text="${task.again}"></td>
+    </tr>
+    </tbody>
+</table>
+<br />
+<a href="/" >Back to list of Tasks</a>
+
+
+<!--<table class="table table-bordered table-striped table-responsive-sm w-100">-->
+<!--    <thead>-->
+<!--    <th>Id</th>-->
+<!--    <th>Name</th>-->
+<!--    <th>Start Date</th>-->
+<!--    <th>End Date</th>-->
+<!--    <th>Time Left</th>-->
+<!--    <th>Interval Length</th>-->
+<!--    <th>Completed</th>-->
+<!--    <th>Repeat</th>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--    <tr>-->
+<!--        <td th:text="${task.getId()}"></td>-->
+<!--        <td th:text="${task.getName()}" class="name"></td>-->
+<!--        &lt;!&ndash;        <td th:text="${task.getStartDate()}"></td>&ndash;&gt;-->
+<!--        <td th:text="${#temporals.format(task.getStartDate(), 'yyyy-MM-dd HH:mm')}"></td>-->
+<!--        &lt;!&ndash;        <td th:text="${task.getEndDate()}" class="end-date"></td>&ndash;&gt;-->
+<!--        <td th:text="${#temporals.format(task.getEndDate(), 'yyyy-MM-dd HH:mm')}" class="end-date"></td>-->
+<!--        <td class="time-left"></td>-->
+
+<!--        <td th:text="${task.getBreaklength()}"></td>-->
+<!--        <td th:text="${task.completed}"></td>-->
+<!--        <td th:text="${task.again}"></td>-->
+<!--    </tr>-->
+<!--    </tbody>-->
+<!--</table>-->
+
+</body>
+</html>

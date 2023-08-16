@@ -7,10 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -82,6 +79,44 @@ public class TaskController {
             tasksRepository.save(task);
         }
         return "redirect:/";
+    }
+
+    @GetMapping("/edit-task")
+    public String showEditForm(@RequestParam int id, Model model) {
+        Task task = tasksRepository.findById(id).orElse(null);
+        if (task != null) {
+            model.addAttribute("task", task);
+            return "modify";
+        } else {
+            return "redirect:/";
+        }
+    }
+
+    @PostMapping("/edit-task")
+    public String saveEditedTask(@ModelAttribute Task editedTask) {
+        Task existingTask = tasksRepository.findById(editedTask.getId()).orElse(null);
+        if (existingTask != null) {
+            existingTask.setName(editedTask.getName());
+            existingTask.setStartDate(editedTask.getStartDate());
+            existingTask.setEndDate(editedTask.getEndDate());
+            existingTask.setBreaklength(editedTask.getBreaklength());
+            existingTask.setCompleted(editedTask.isCompleted());
+            existingTask.setAgain(editedTask.isAgain());
+            tasksRepository.save(existingTask);
+        }
+        return "redirect:/";
+    }
+
+    @RequestMapping("/task")
+    public String getTask(@RequestParam("id") Integer id, Model model){
+        Task task = tasksRepository.findById(id).orElse(null);
+
+        if (task != null) {
+            model.addAttribute("task", task);
+            return "task";
+        } else {
+            return "redirect:/";
+        }
     }
 
 }

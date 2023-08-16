@@ -1,0 +1,35 @@
+<html lang="en">
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--  -->
+<!--  <title>Edit Task</title>-->
+<!--</head>-->
+<head th:replace="header :: head">
+</head>
+<body>
+<h2>Edit Task</h2>
+<form th:action="@{/edit-task}" th:object="${task}" method="post">
+  <input type="hidden" th:field="*{id}" /> <!-- Assuming 'id' is the primary key of Task entity -->
+  <label for="name">Task Name:</label>
+  <input type="text" id="name" th:field="*{name}" style="width: 400px"/>
+  <br>
+  <label for="startDate">Start Date:</label>
+  <input type="datetime-local" id="startDate" th:field="*{startDate}" />
+  <br>
+  <label for="endDate">End Date:</label>
+  <input type="datetime-local" id="endDate" th:field="*{endDate}" />
+  <br>
+  <label for="breaklength">Interval Length:</label>
+  <input type="text" id="breaklength" th:field="*{breaklength}" />
+  <br>
+  <label for="completed">Completed:</label>
+  <input type="checkbox" id="completed" th:field="*{completed}" />
+  <br>
+  <label for="again">Repeat:</label>
+  <input type="checkbox" id="again" th:field="*{again}" />
+  <br>
+  <input type="submit" value="Save Changes" />
+</form>
+</body>
+</html>

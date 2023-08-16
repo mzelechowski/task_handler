@@ -35,7 +35,7 @@
         <td th:text="${task.completed}"></td>
         <td th:text="${task.again}"></td>
         <td>
-            <a th:href="|/task/${task.id}|">view</a>
+            <a th:href="${'/task?id='+task.getId()}">view</a>
         </td>
         <td>
             <form action="/delete" method="post">
@@ -44,7 +44,7 @@
             </form>
         </td>
         <td>
-            <form action="/modify" method="post">
+            <form action="/edit-task" method="get">
                 <input hidden name="id" th:value="${task.getId()}">
                 <button type="submit" class="tbn btn-info btn-sm pt-0 pb-0">modify</button>
             </form>
@@ -64,6 +64,7 @@
     </tr>
     </tbody>
 </table>
+
 <br /><br />
 <h2>Add New Task</h2>
     <form action="/add-task" method="post" autocomplete="off" onsubmit="abc()">
