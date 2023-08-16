@@ -59,7 +59,7 @@ public class TaskController {
         if (optionalTask.isPresent()) {
             Task task = optionalTask.get();
 //            if (task.getStartDate() == null) {
-                LocalDateTime initialDateTime = LocalDateTime.now().withSecond(0);
+                LocalDateTime initialDateTime = LocalDateTime.now();
             System.out.println(initialDateTime);
                 task.setStartDate(initialDateTime);
                 task.setEndDate(initialDateTime.plusSeconds((long) (task.getBreaklength()*60)));
@@ -119,5 +119,4 @@ public class TaskController {
             return "redirect:/";
         }
     }
-
 }
